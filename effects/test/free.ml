@@ -85,16 +85,21 @@ module EffFree(M : Free.S) = struct
 
     type 'a t = unit -> 'a
     let pure a () = a
-    let ( >>= ) m f = f (m ())
+    let ( >>= ) m f () = f (m ()) ()
 
-    let of_free m = M.fold pure (fun t -> Effect.perform (F t)) m
+    let of_free m () = M.fold pure (fun t -> Effect.perform (F t)) m ()
 
-    let rec to_free m =
+    (* XXX: Is this correct? *)
+    let to_free m =
         Effect.Deep.try_with (fun () -> M.pure (m ())) ()
         { effc = fun (type a) (eff : a Effect.t) ->
             match eff with
               F (t : a M.F.t) -> Option.some @@ fun (k : (a, _) Effect.Deep.continuation) ->
-                M.(>>=) (M.lift t) (fun a -> to_free (fun () -> Effect.Deep.continue k a))
+                (* Cleanup after continuations which are never continued *)
+                let exception Unwind in
+                let cleanup k = try ignore (Effect.Deep.discontinue k Unwind) with _ -> () in
+                Gc.finalise cleanup k;
+                M.(>>=) (M.lift t) (Effect.Deep.continue k)
             | _ -> None }
 
     let _ : 'a M.t -> 'a t = of_free
