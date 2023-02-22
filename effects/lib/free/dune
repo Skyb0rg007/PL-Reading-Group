@@ -1,0 +1,4 @@
+(library
+ (name free)
+ (modules free functor tseq)
+ (private_modules tseq))

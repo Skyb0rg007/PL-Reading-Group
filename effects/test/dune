@@ -1,0 +1,8 @@
+(test
+ (name effects)
+ (modules effects))
+
+(test
+ (name free)
+ (libraries free)
+ (modules free))

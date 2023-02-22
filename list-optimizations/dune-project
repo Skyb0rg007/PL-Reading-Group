@@ -1,0 +1,22 @@
+(lang dune 3.6)
+
+(name list_optimizations)
+
+(version 0.1.0)
+
+(authors "Skye Soss")
+
+(maintainers "Skye Soss")
+
+(license LICENSE)
+
+(generate_opam_files true)
+
+(implicit_transitive_deps false)
+
+(package
+ (name list_optimizations)
+ (synopsis "Testing list representations")
+ (description "List representations for optimizing different operations")
+ (depends ocaml dune core core_unix.command_unix core_bench))
+
