@@ -33,7 +33,7 @@ let fold_left f z xs =
         (fun x k acc -> f (k acc) x)
         z
 
-(* O(n) *)
+(* O(n), not stack-safe *)
 let uncons xs =
     xs.run
         None
