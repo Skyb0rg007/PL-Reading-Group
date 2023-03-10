@@ -1,13 +1,10 @@
 
 type 'a t = {run : 'r . 'r -> ('a -> 'r -> 'r) -> 'r}
 
-(* O(1) *)
 let nil = {run = fun z _ -> z}
 
-(* O(1), not stack-safe *)
-let cons x xs = {run = fun z f -> f x (xs.run z f)}
+let cons x l = {run = fun z f -> f x (l.run z f)}
 
-(* O(n) *)
 let unfold step seed =
     {run = fun z f ->
         let rec loop acc s =
@@ -16,26 +13,20 @@ let unfold step seed =
             | Some (x, s') -> loop (f x acc) s'
         in loop z seed}
 
-(* O(1) *)
-let append xs ys = {run = fun z f -> xs.run (ys.run z f) f}
+let append l1 l2 = {run = fun z f -> l1.run (l2.run z f) f}
 
-(* O(1) *)
-let map g xs = {run = fun z f ->
-    xs.run z (fun y ys -> f (g y) ys)}
+let map g l = {run = fun z f -> l.run z (fun y -> f (g y))}
 
-(* O(n) *)
-let fold_right f xs z = xs.run z f
+let fold_right f l z = l.run z f
 
-(* O(n) *)
-let fold_left f z xs =
-    xs.run
+let fold_left f z l =
+    l.run
         (fun acc -> acc)
         (fun x k acc -> f (k acc) x)
         z
 
-(* O(n), not stack-safe *)
-let uncons xs =
-    xs.run
+let uncons l =
+    l.run
         None
         (fun x opt ->
             match opt with

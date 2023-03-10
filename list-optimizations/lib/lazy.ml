@@ -5,7 +5,6 @@ and 'a node =
     Nil
   | Cons of 'a * 'a t
 
-
 let nil () = Nil
 
 let cons x xs () = Cons (x, xs)
