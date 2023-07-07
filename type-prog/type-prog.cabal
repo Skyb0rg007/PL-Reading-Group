@@ -1,0 +1,74 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           type-prog
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/type-prog#readme>
+homepage:       https://github.com/Skyb0rg007/PL-Reading-Group#readme
+bug-reports:    https://github.com/Skyb0rg007/PL-Reading-Group/issues
+author:         Skye Soss
+maintainer:     skyler.soss@gmail.com
+copyright:      2023 Skye Soss
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/Skyb0rg007/PL-Reading-Group
+
+library
+  exposed-modules:
+      Control.Monad.Effect
+      Control.Monad.Free
+      Control.Monad.Free.Test
+      Data.Sum
+      Lib
+  other-modules:
+      Paths_type_prog
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , free
+    , random
+    , transformers
+  default-language: Haskell2010
+
+executable type-prog-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_type_prog
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , free
+    , random
+    , transformers
+    , type-prog
+  default-language: Haskell2010
+
+test-suite type-prog-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_type_prog
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , free
+    , random
+    , transformers
+    , type-prog
+  default-language: Haskell2010

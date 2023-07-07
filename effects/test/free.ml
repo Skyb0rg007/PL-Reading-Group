@@ -169,3 +169,58 @@ let () =
       (n, Either.Left e) -> print_endline ("(" ^ Int.to_string n ^ ", Left " ^ e ^ ")")
     | (n, Either.Right ()) -> print_endline ("(" ^ Int.to_string n ^ ", Right ())")
 
+
+module Nonterm = struct
+
+    module F = struct
+        type 'a t = Output of int * 'a
+
+        let map f (Output (n, a)) = Output (n, f a)
+    end
+
+    module Test(M : Free.S with type 'a F.t = 'a F.t) = struct
+        open M.Infix
+
+        let rec prog () =
+            let* () = M.lift (F.Output (10, ())) in
+            let* () = M.pure () in
+            prog ()
+
+        let run_lim prog =
+            M.fold (fun a () -> Some a)
+                (fun (F.Output (_, _)) -> fun () -> None
+                    (* print_endline ("Output " ^ Int.to_string n); *)
+                    (* if !lim < 10 *)
+                    (*     then (ns := n :: !ns; lim := !lim + 1; k) *)
+                        (* else fun () -> None) *)
+                )
+                prog ()
+
+        let _ = prog
+        let _ = run_lim
+    end
+
+    module AdtM = Free.Make(F)
+    module AdtOutput = Test(AdtM)
+    module ChurchM = Free.Church(F)
+    module ChurchOutput = Test(ChurchM)
+    module CatM = Free.Cat(F)
+    module CatOutput = Test(CatM)
+    module RwrM = Free.Rwr(F)
+    module RwrOutput = Test(RwrM)
+    module CodensityM = Free.Codensity(AdtM)
+    module CodensityOutput = Test(CodensityM)
+
+    let _ = print_endline "Starting"
+    let x = CatOutput.prog ()
+    let _ = x
+    let x = ChurchOutput.prog ()
+    let _ = x
+    let x = RwrOutput.prog ()
+    let _ = x
+    let x = CodensityOutput.prog ()
+    let _ = x
+    (* let x = AdtOutput.prog () (* Nontermination!! *) *)
+    let _ = print_endline "Done"
+
+end

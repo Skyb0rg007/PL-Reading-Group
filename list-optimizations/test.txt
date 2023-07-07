@@ -1,0 +1,24 @@
+
+fold_right f (append l1 l2) z == fold_right f l1 (fold_right f l2 z)
+
+fold_right Cons l Nil == l
+
+abs l = fun f z -> fold_right f l z
+
+
+
+append (append l1 l2) l3 == append l1 (append l2 l3)
+                         == (append l1 ∘ append l2) l3
+
+append l Nil == l
+
+abs l1 = fun l2 -> append l1 l2
+rep k = k Nil
+
+
+
+append (append xs ys) zs          (* Faster! *)
+uncons (append (append xs ys) zs) (* Still faster! *)
+append (uncons (append xs ys)) zs (* !!!! *)
+
+

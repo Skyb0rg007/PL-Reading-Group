@@ -1,0 +1,75 @@
+name:                lens-examples
+version:             0.1.0.0
+github:              "Skyb0rg007/lens-examples"
+license:             BSD3
+author:              "Skye Soss"
+maintainer:          "skyler.soss@gmail.com"
+copyright:           "2023 Skye Soss"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/Skyb0rg007/lens-examples#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- array
+- bytestring
+- comonad
+- time
+- containers
+- distributive
+- free
+- hashable
+- lens
+- mtl
+- text
+- transformers
+- vector
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+default-extensions:
+- ImportQualifiedPost
+
+library:
+  source-dirs: src
+
+executables:
+  lens-examples-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lens-examples
+
+tests:
+  lens-examples-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lens-examples

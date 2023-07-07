@@ -1,0 +1,41 @@
+src/Vec.hs:(17,2)-(21,7): Splicing declarations
+    singletons [d| data Nat_a26o = Zero_a26p | Succ_a26q Nat_a26o |]
+  ======>
+    data Nat_a3Ki = Zero_a3Kj | Succ_a3Kk Nat_a3Ki
+    type ZeroSym0 :: Nat_a3Ki
+    type family ZeroSym0 :: Nat_a3Ki where
+      ZeroSym0 = Zero_a3Kj
+    type SuccSym0 :: (~>) Nat_a3Ki Nat_a3Ki
+    data SuccSym0 :: (~>) Nat_a3Ki Nat_a3Ki
+      where
+        SuccSym0KindInference :: SameKind (Apply SuccSym0 arg_a3Km) (SuccSym1 arg_a3Km) =>
+                                 SuccSym0 a6989586621679024199
+    type instance Apply SuccSym0 a6989586621679024199 = Succ_a3Kk a6989586621679024199
+    instance SuppressUnusedWarnings SuccSym0 where
+      suppressUnusedWarnings = snd (((,) SuccSym0KindInference) ())
+    type SuccSym1 :: Nat_a3Ki -> Nat_a3Ki
+    type family SuccSym1 (a6989586621679024199 :: Nat_a3Ki) :: Nat_a3Ki where
+      SuccSym1 a6989586621679024199 = Succ_a3Kk a6989586621679024199
+    data SNat :: Nat_a3Ki -> Type
+      where
+        SZero :: SNat (Zero_a3Kj :: Nat_a3Ki)
+        SSucc :: forall (n_a3Ko :: Nat_a3Ki).
+                 (Sing n_a3Ko) -> SNat (Succ_a3Kk n_a3Ko :: Nat_a3Ki)
+    type instance Sing @Nat_a3Ki = SNat
+    instance SingKind Nat_a3Ki where
+      type Demote Nat_a3Ki = Nat_a3Ki
+      fromSing SZero = Zero_a3Kj
+      fromSing (SSucc b_a3Kq) = Succ_a3Kk (fromSing b_a3Kq)
+      toSing Zero_a3Kj = SomeSing SZero
+      toSing (Succ_a3Kk (b_a3Ks :: Demote Nat_a3Ki))
+        = case toSing b_a3Ks :: SomeSing Nat_a3Ki of
+            SomeSing c_a3Kt -> SomeSing (SSucc c_a3Kt)
+    instance SingI Zero_a3Kj where
+      sing = SZero
+    instance SingI n_a3Ko =>
+             SingI (Succ_a3Kk (n_a3Ko :: Nat_a3Ki)) where
+      sing = SSucc sing
+    instance SingI1 Succ_a3Kk where
+      liftSing = SSucc
+    instance SingI (SuccSym0 :: (~>) Nat_a3Ki Nat_a3Ki) where
+      sing = (singFun1 @SuccSym0) SSucc

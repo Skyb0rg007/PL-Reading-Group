@@ -1,0 +1,99 @@
+name:                sing
+version:             0.1.0.0
+github:              "skyb0rg/PL-Reading-Group"
+license:             BSD3
+author:              "Skye Soss"
+maintainer:          "skyler.soss@gmail.com"
+copyright:           "2023 Skye Soss"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+description:         Please see the README on GitHub at <https://github.com/Skyb0rg/PL-Reading-Group/tree/master/sing>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- vector
+- singletons
+- singletons-th
+- singletons-base
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+default-extensions:
+- BangPatterns
+- BlockArguments 
+- ConstraintKinds
+- DataKinds 
+- DefaultSignatures
+- DerivingStrategies
+- EmptyCase 
+- ExistentialQuantification 
+- ExplicitForAll 
+- ExplicitNamespaces 
+- FlexibleContexts
+- FlexibleInstances 
+- GADTSyntax 
+- GADTs 
+- GeneralizedNewtypeDeriving
+- ImportQualifiedPost
+- InstanceSigs 
+- KindSignatures 
+- LambdaCase 
+- MonoLocalBinds 
+- MultiParamTypeClasses
+- NoNamedWildCards
+- NoStarIsType
+- PatternSynonyms
+- PolyKinds 
+- QuantifiedConstraints 
+- RankNTypes 
+- RoleAnnotations
+- ScopedTypeVariables 
+- StandaloneDeriving
+- StandaloneKindSignatures 
+- TypeApplications 
+- TypeFamilies 
+- TypeFamilyDependencies 
+- TypeOperators 
+- ViewPatterns
+
+library:
+  source-dirs: src
+
+executables:
+  sing-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - sing
+
+tests:
+  sing-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - sing

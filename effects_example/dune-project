@@ -1,0 +1,19 @@
+(lang dune 3.0)
+(generate_opam_files true)
+(package
+ (name effects_example)
+ (description "Insert project description here.")
+ (synopsis "Insert project synopsis, which is supposedly different, here")
+ (maintainers "Your Name <youremail@gmail.com>")
+ (authors "Your Name <youremail@gmail.com>")
+ (homepage "https://your.website.here")
+ (bug_reports "https://your.website.here")
+ (depends
+  (ocaml (>= 4.13.0))
+  dune
+  prelude
+  mattlude
+  utop
+  camlp-streams
+  ocp-index
+  merlin))

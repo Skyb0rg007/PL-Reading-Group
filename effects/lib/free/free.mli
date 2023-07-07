@@ -28,6 +28,24 @@ end
 
 (* Standard free monad
  * Inefficient ( >>= ), but efficient unwrap
+ *
+ * Note: One issue that this implementation has is the inability to delay binds
+ * Ex. The code below will not terminate:
+ * 
+ * module F = struct
+ *   type 'a t = Output of int * 'a
+ *   let map f (Output (n, a)) = Output (n, f a)
+ * end
+ *
+ * module M = Free.Make(F)
+ * open M.Infix
+ * 
+ * let rec prog () =
+ *   let* () = M.lift (F.Output 4) in
+ *   prog ()
+ *
+ * let _ = prog () (* Doesn't terminate! *)
+ *
  *)
 module Make(F : Functor.S) : S with module F = F
 
